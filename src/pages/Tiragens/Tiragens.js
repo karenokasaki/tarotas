@@ -1,11 +1,14 @@
 
 import axios from 'axios'
 import uniqid from 'uniqid'
-import Search from '../../components/Search'
-
+import SearchTiragem from '../../components/SearchTiragem'
+import { useState } from 'react'
 
 
 function Tiragens({ tiragens, setIsLoading }) {
+
+    const [searchTiragem, setSearchTiragem] = useState('')
+
 
     async function handleDelete(event) {
         try {
@@ -20,26 +23,30 @@ function Tiragens({ tiragens, setIsLoading }) {
     }
 
     return (
+        <div>
+        <SearchTiragem searchTiragem={searchTiragem} setSearchTiragem={setSearchTiragem}/>
         <div className='tiragens' key={uniqid()}>
-        <Search />
-            {tiragens.map((tiragem) => {
+            {tiragens.map((tiragem) => { //mostra todas as keyse values da tiragem
                 return (
                     <div className='tiragem' key={uniqid()}>
-                        {Object.keys(tiragem).map((key) => {
-                            return (
-                                <div key={uniqid()}>
-                                    <div key={uniqid()}>{key}: {tiragem[key]}</div>
+                        {Object.keys(tiragem)
 
-                                </div>
-                            )
-                        })}
+                            .map((key) => {
+                                return (
+                                    <div key={uniqid()}>
+                                        <div key={uniqid()}>{key}: {tiragem[key]}</div>
+
+                                    </div>
+                                )
+                            })}
 
 
-                        <button key={uniqid()}>Editar</button>
+                        {/* <button key={uniqid()}>Editar</button> */} 
                         <button key={uniqid()} onClick={handleDelete} name={tiragem._id}>Excluir!</button>
                     </div>
                 )
             }).reverse()}
+        </div>
         </div>
     );
 }

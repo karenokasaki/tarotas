@@ -7,7 +7,7 @@ function Home({cards}) {
 //recebendo as cartas da api
 
     const [search, setSearch] = useState('')
-
+    const [allCards, setAllCards] = useState(true)
 
     return (
         <div>
@@ -25,7 +25,7 @@ function Home({cards}) {
                     .map((card) => {
                     return (
                         <div key={card.name_short} className="card">
-                        <Card  card={card}/> {/* passando as cartas para serem filtradas */}
+                            <Card  card={card} setSearch={setSearch}/> {/* passando as cartas para serem filtradas */}
                         </div>
                     )
                 })}
