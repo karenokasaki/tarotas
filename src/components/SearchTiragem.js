@@ -13,7 +13,6 @@ function SearchTiragem({ searchTiragem, setSearchTiragem }) {
             value={searchTiragem}
             onChange={handleChange}
             className='border rounded-md placeholder:italic px-3 py-2 border border-slate-400 w-full'
-
         />
     );
 }

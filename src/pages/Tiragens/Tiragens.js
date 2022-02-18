@@ -37,8 +37,7 @@ function Tiragens({ tiragens, setIsLoading }) {
                                 .map((key) => {
                                     return (
                                         <div key={uniqid()}>
-                                            <div key={uniqid()}>{key}: {tiragem[key]}</div>
-
+                                            <div key={uniqid()}><span className='text-sm text-gray-400 capitalize'>{key}:</span> <span className='text-lg'>{tiragem[key]}</span></div>
                                         </div>
                                     )
                                 })}
