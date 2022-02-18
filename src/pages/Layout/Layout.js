@@ -11,13 +11,15 @@ function Layout({ layouts, setIsLoading }) {
     const [tiragem, setTiragem] = useState({})
     const [date, setDate] = useState()
     const [userFormOk, setUserFormOk] = useState(false)
+    const [notas, setNotas] = useState('')
 
     const navigate = useNavigate()
+    
 
     function handleChange(event) { //faz o update do state de cada carta
         event.preventDefault()
-        setTiragem({ ...tiragem, [event.target.parentElement[0].placeholder]: event.target.parentElement[0].value }) //passado:carta
-        console.log(event.target.style)
+        setTiragem({ ...tiragem, [event.target.form[0].attributes[0].nodeValue]: event.target.form[0].value })  //passado:carta
+        
 
     }
 
@@ -30,15 +32,14 @@ function Layout({ layouts, setIsLoading }) {
         event.preventDefault()
         setUser(event.target.value) //user: nome do user
         setLayoutName(event.target.id) //layout: nome do layout
-        console.log(event.target.style)
     }
 
     function handleSubmit(event) {  //btn salvar nome - junta todas as informações
         event.preventDefault()
-        setTiragem({ ...tiragem, user, date, layoutName })
+        setTiragem({ ...tiragem, user, date, layoutName, notas })
         setUserFormOk(true)
-        console.log(event.target.style)
         event.target.style.display = 'none'
+        setNotas('')
 
 
     }
@@ -58,6 +59,8 @@ function Layout({ layouts, setIsLoading }) {
             navigate('/tiragens')
         }
     }
+  
+
     return (
         <>
             {layouts
@@ -76,14 +79,14 @@ function Layout({ layouts, setIsLoading }) {
                                     id={layout.name}
                                     onChange={handleUser}
                                     className='border rounded-md placeholder:italic mt-1 px-3 py-2 border border-slate-400 w-40'
-                                    
+
                                 />
                                 <input
                                     name='date'
                                     type="date"
                                     onChange={handleDate}
                                     className='border rounded-md placeholder:italic mt-1 px-3 py-2 border border-slate-400 w-40 ml-4'
-                                    
+
                                 />
                             </div>
                             <button onClick={handleSubmit} className='m-2 p-2 bg-neutral-600 rounded-lg drop-shadow-md border text-white'>Salvar nome e data</button>
@@ -93,24 +96,24 @@ function Layout({ layouts, setIsLoading }) {
                                 userFormOk && <div className='flex flex-col items-center text-slate-400 mb-8'>
                                     <p>Salvar uma carta por vez:</p>
                                     <ol className='list-decimal'>
-                                    {layout.layout.map((currentLayout) => {
-                                        return (
-                                            <div key={uniqid()}>
-                                             
-                                                <form name={`${currentLayout.name}`} >
-                                                    
-                                                <li><input
-                                                        placeholder={currentLayout}
-                                                        name={currentLayout.name}
-                                                        className='border rounded-md placeholder:italic mt-1 px-3 py-2 border border-slate-400'
-                                                    />
-                                                    <button type="button" name={`${currentLayout.name}`} onClick={handleChange} className='m-2 p-2 bg-neutral-600 rounded-lg drop-shadow-md border text-white'>Salvar</button>
-                                                </li>
-                                                </form>
-                                            
-                                            </div>
-                                        )                                    
-                                    })}
+                                        {layout.layout.map((currentLayout) => {
+                                            return (
+                                                <div key={uniqid()}>
+
+                                                    <form name={`${currentLayout.name}`} >
+
+                                                        <li><input
+                                                            placeholder={currentLayout}
+                                                            name={currentLayout.name}
+                                                            className='border rounded-md mt-1 px-3 py-2 border border-slate-400'
+                                                        />
+                                                            <button type="button" name={`${currentLayout.name}`} onClick={handleChange} className='m-2 p-2 bg-neutral-600 rounded-lg drop-shadow-md border text-white'>Salvar</button>
+                                                        </li>
+                                                    </form>
+
+                                                </div>
+                                            )
+                                        })}
                                     </ol>
                                     <label>Notas:</label>
                                     <textarea
