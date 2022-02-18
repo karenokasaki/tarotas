@@ -23,30 +23,31 @@ function Tiragens({ tiragens, setIsLoading }) {
     }
 
     return (
-        <div>
-        <SearchTiragem searchTiragem={searchTiragem} setSearchTiragem={setSearchTiragem}/>
-        <div className='tiragens' key={uniqid()}>
-            {tiragens.map((tiragem) => { //mostra todas as keyse values da tiragem
-                return (
-                    <div className='tiragem' key={uniqid()}>
-                        {Object.keys(tiragem)
+        <div className='m-5 flex flex-col mb-6 drop-shadow-md'>
+            <SearchTiragem searchTiragem={searchTiragem} setSearchTiragem={setSearchTiragem} />
+            <div className='flex flex-col ' key={uniqid()}>
+                {tiragens
+                    .filter((tiragem) => {
+                        return (tiragem.layoutName.toLowerCase()).includes(searchTiragem.toLowerCase())
+                    })
+                    .map((tiragem) => { //mostra todas as keyse values da tiragem
+                    return (
+                        <div key={uniqid()} className='mt-4 p-2 border-2 rounded-xl '>
+                            {Object.keys(tiragem)
+                                .map((key) => {
+                                    return (
+                                        <div key={uniqid()}>
+                                            <div key={uniqid()}>{key}: {tiragem[key]}</div>
 
-                            .map((key) => {
-                                return (
-                                    <div key={uniqid()}>
-                                        <div key={uniqid()}>{key}: {tiragem[key]}</div>
-
-                                    </div>
-                                )
-                            })}
-
-
-                        {/* <button key={uniqid()}>Editar</button> */} 
-                        <button key={uniqid()} onClick={handleDelete} name={tiragem._id}>Excluir!</button>
-                    </div>
-                )
-            }).reverse()}
-        </div>
+                                        </div>
+                                    )
+                                })}
+                            <button key={uniqid()} className='m-1 p-1 rounded-lg bg-amber-400 border-2 text-sm text-white w-16'>Editar</button>
+                            <button key={uniqid()} onClick={handleDelete} name={tiragem._id} className='m-1 p-1 rounded-lg bg-red-400  border-2 text-sm text-white w-16'>Excluir!</button>
+                        </div>
+                    )
+                }).reverse()}
+            </div>
         </div>
     );
 }

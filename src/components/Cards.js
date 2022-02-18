@@ -1,15 +1,10 @@
-import {Link} from 'react-router-dom'
-
-
+import { Link } from 'react-router-dom'
 
 
 function Cards(props) {
-   
-  
-
    return (
       <div>
-         <div className='card' key={props.name_short}>
+         <div className='flex' key={props.name_short}>
             <h4>{props.name}</h4>
             <p>Type: {props.type === 'major' ? 'Arcanjo Maior' : 'Arcanjo Menor'}</p>
             <p>Id: {props.name_short}</p>
@@ -17,8 +12,8 @@ function Cards(props) {
 
          </div>
 
-      
-         
+
+
       </div>
    );
 }

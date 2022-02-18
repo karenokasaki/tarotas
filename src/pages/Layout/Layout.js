@@ -1,7 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom'
-import { useState} from 'react'
+import { useState } from 'react'
 import uniqid from 'uniqid'
-import './Layout.css'
 import axios from 'axios'
 
 
@@ -20,13 +19,14 @@ function Layout({ layouts, setIsLoading }) {
     function handleChange(event) { //faz o update do state de cada carta
         event.preventDefault()
         setTiragem({ ...tiragem, [event.target.parentElement[0].placeholder]: event.target.parentElement[0].value }) //passado:carta
-        
+
     }
 
     function handleUser(event) { //botão do user -> ao clicar, update de states user layout and date
         event.preventDefault()
         setUser(event.target.value) //user: nome do user
         setLayoutName(event.target.id) //layout: nome do layout
+        event.target.style = 'white'
         console.log('passou')
     }
 
@@ -54,35 +54,37 @@ function Layout({ layouts, setIsLoading }) {
     }
 
     return (
-        <div>
-            Pagina que vai mostrar o layout completo e é aqui que vai ter o form para adicionar uma tiragem!
+        <>
             {layouts
                 .filter((Layout) => {
                     return Layout._id.includes(params.idLayout)
                 })
                 .map((layout) => {
                     return (
-                        <div key={layout._id}>
+                        <div key={layout._id} className='flex flex-col m-2 p-3 items-center'>
                             <img src={layout.img} alt="spread"></img>
-                            <p>Nome do layout: {layout.name}</p>
-                            <label>Digite seu nome</label>
-                            <input
-                                placeholder="Nome completo"
-                                name={"user"}
-                                id={layout.name}
-                                onChange={handleUser}
-                            />
-                            <input
-                                name='date'
-                                type="date"
-                                onChange={handleDate}
-                            />
-                            <button onClick={handleSubmit}>Salvar nome e data</button>
+                            <p>Layout: {layout.name}</p>
+                            <div className='flex'>
+                                <input
+                                    placeholder="Nome completo"
+                                    name={"user"}
+                                    id={layout.name}
+                                    onChange={handleUser}
+                                    className='border rounded-md placeholder:italic mt-1 px-3 py-2 border border-slate-400 w-40'
+                                />
+                                <input
+                                    name='date'
+                                    type="date"
+                                    onChange={handleDate}
+                                    className='border rounded-md placeholder:italic mt-1 px-3 py-2 border border-slate-400 w-40 ml-4'
+                                />
+                            </div>
+                            <button onClick={handleSubmit} className='m-2 p-2 bg-neutral-600 rounded-lg drop-shadow-md border text-white'>Salvar nome e data</button>
 
                             {console.log(Object.keys(layout))}
                             {
-                            userFormOk && <div>
-                                    <p>Inserir as cartas na ordem apresentada:</p>
+                                userFormOk && <div className='flex flex-col items-center text-slate-400 mb-8'>
+                                    <p>Salvar uma carta por vez:</p>
                                     {layout.layout.map((currentLayout) => {
                                         return (
                                             <div key={uniqid()}>
@@ -90,20 +92,21 @@ function Layout({ layouts, setIsLoading }) {
                                                     <input
                                                         placeholder={currentLayout}
                                                         name={currentLayout.name}
+                                                        className='border rounded-md placeholder:italic mt-1 px-3 py-2 border border-slate-400'
                                                     />
-                                                    <button type="button" name={`${currentLayout.name}`} onClick={handleChange}>save</button>
+                                                    <button type="button" name={`${currentLayout.name}`} onClick={handleChange} className='m-2 p-2 bg-neutral-600 rounded-lg drop-shadow-md border text-white'>Salvar</button>
                                                 </form>
                                             </div>
                                         )
                                     })}
-                                    {(Object.keys(tiragem).length) >= 6 && <button onClick={handleForm}>Enviar Tiragem! </button>}
+                                    {(Object.keys(tiragem).length) >= 6 && <button onClick={handleForm} className='flex m-3 p-3 bg-amber-400 rounded-lg drop-shadow-md border text-white justify-center font-bold'>Enviar Tiragem! </button>}
                                 </div>
                             }
                         </div>
 
                     )
                 })}
-        </div>);
+        </>);
 }
 
 export default Layout;
