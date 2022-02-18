@@ -17,7 +17,7 @@ import Navbar from './components/Navbar';
 function App() {
 
   const [cards, setCards] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [layouts, setLayouts] = useState([])
   const [tiragens, setTiragens] = useState()
 
@@ -39,9 +39,9 @@ function App() {
 
   useEffect(() => {
     async function fetchLayout() {
-      setIsLoading(true)
+      
       try {
-        setIsLoading(true)
+        
         const result = await axios.get('https://ironrest.herokuapp.com/tarotasTiragens')
         setLayouts(result.data)
       } catch (error) {

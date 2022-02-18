@@ -11,7 +11,6 @@ function Layout({ layouts, setIsLoading }) {
     const [tiragem, setTiragem] = useState({})
     const [date, setDate] = useState()
     const [userFormOk, setUserFormOk] = useState(false)
-    const [notas, setNotas] = useState('')
 
     const navigate = useNavigate()
 
@@ -36,7 +35,7 @@ function Layout({ layouts, setIsLoading }) {
 
     function handleSubmit(event) {  //btn salvar nome - junta todas as informações
         event.preventDefault()
-        setTiragem({ ...tiragem, user, date, layoutName, notas })
+        setTiragem({ ...tiragem, user, date, layoutName })
         setUserFormOk(true)
         console.log(event.target.style)
         event.target.style.display = 'none'
