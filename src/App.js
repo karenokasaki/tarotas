@@ -10,6 +10,7 @@ import Layout from './pages/Layout/Layout';
 import Tiragens from './pages/Tiragens/Tiragens';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
 import Card from './pages/Card/Card';
+import Edit from './pages/Edit/Edit';
 
 import Navbar from './components/Navbar';
 
@@ -103,6 +104,11 @@ function App() {
           elemen
           path="*" 
           element={<ErrorPage />} 
+        />
+        <Route 
+          exact
+          path='/edit/:id'
+          element={<Edit />}
         />
       </Routes>
 
